@@ -31,7 +31,8 @@ class ActivityLog < ApplicationRecord
 							d.baby_id = params[:baby_id]
 							d.assistant_id = params[:assistant_id]
 							d.activity_id = params[:activity_id]
-							d.start_time = DateTime.parse(params[:start_time])
+							Time.zone = "Mexico City"
+							d.start_time = DateTime.parse(params[:start_time]).in_time_zone
 							if d.save
 								[200, "SUCCESS"]
 							else
@@ -55,18 +56,19 @@ class ActivityLog < ApplicationRecord
 	end
 
 	def self.update_activity_log(params)
+		Time.zone = "Mexico City"
 		if params[:stop_time].present? && params[:id].present?
 			activity_log = ActivityLog.find_by_id(params[:id])
 			if activity_log.present?
 				valid_date = true
 				begin
-					DateTime.parse("03-02-2010 22:54:52")
+					DateTime.parse(params[:stop_time])
 				rescue ArgumentError
 					puts "Fecha invalida"
 					valid_date = false
 				end
 				if valid_date
-					activity_log.stop_time = DateTime.parse(params[:stop_time])
+					activity_log.stop_time = DateTime.parse(params[:stop_time]).in_time_zone
 					if activity_log.save
 						[200, "SUCCESS"]
 					else
