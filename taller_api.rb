@@ -14,11 +14,36 @@ response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
 
 
 
-parametros = {"inventory_item_ids" => "", "location_ids" => ""}
+
 header = {"Content-Type" => "application/json" , "Accept" => "application/json"}
 
 
-parametros = {}
+parametros = {"page"=>2}
+baby_id = 5
 url_base = "https://api-guarderia.herokuapp.com/api/"
-url_base = url_base + "activities"
+url_base = url_base + "babies/#{baby_id}/activity_logs"
 response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
+response.code
+res = JSON.parse response.body
+res.size
+
+
+
+
+
+
+user = User.last
+
+header = {"Content-Type" => "application/json" , "Accept" => "application/json", "Auth-Token"=> user.token, "User"=> user.nombre}
+
+
+parametros = {"page"=>2}
+baby_id = 5
+url_base = "https://api-guarderia.herokuapp.com/api/"
+url_base = url_base + "activity_logs"
+response = HTTParty.post("#{url_base}", :query => parametros, :headers =>header)
+
+
+response.code
+res = JSON.parse response.body
+res.size

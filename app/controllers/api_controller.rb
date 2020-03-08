@@ -7,7 +7,7 @@ class ApiController < ApplicationController
 		puts params
 		puts request.headers["Auth-Token"]
 	    puts request.headers["User"]
-	    if request.headers["Authorization"].present? && request.headers["User"].present?
+	    if request.headers["Auth-Token"].present? && request.headers["User"].present?
 	    	token = request.headers["Auth-Token"]
       		user = request.headers["User"]
       		usuario = User.where("token"=>token, "nombre"=>user).take
