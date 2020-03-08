@@ -3,7 +3,7 @@ class ActivityLog < ApplicationRecord
 	belongs_to :activity
 	belongs_to :assistant
 
-	after_update :set_duration
+	before_update :set_duration
 
 	def set_duration
 		duration = ((stop_time - start_time) / 1.hour)*60
