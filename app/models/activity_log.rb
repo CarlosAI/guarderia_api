@@ -55,8 +55,8 @@ class ActivityLog < ApplicationRecord
 	end
 
 	def self.update_activity_log(params)
-		if params[:stop_time].present? && params[:activity_log_id].present?
-			activity_log = ActivityLog.find_by_id(params[:activity_log_id])
+		if params[:stop_time].present? && params[:id].present?
+			activity_log = ActivityLog.find_by_id(params[:id])
 			if activity_log.present?
 				valid_date = true
 				begin
@@ -79,7 +79,7 @@ class ActivityLog < ApplicationRecord
 				[400, "ActivityLog not found"]
 			end
 		else
-			return [400, "Parametros incompletos, Obligatorios (stop_time, activity_log_id)"]
+			return [400, "Parametros incompletos, Obligatorios (stop_time, id)"]
 		end
 	end
 end
