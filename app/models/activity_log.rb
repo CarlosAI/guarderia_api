@@ -7,7 +7,7 @@ class ActivityLog < ApplicationRecord
 
 	def set_duration
 		duration = ((stop_time - start_time) / 1.hour)*60
-		self.duration = duration.to_i
+		self.duration = duration.ceil
 	end
 
 

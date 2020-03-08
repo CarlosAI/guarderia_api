@@ -61,7 +61,7 @@ Time.zone = "Mexico City"
 parametros = {"stop_time" => Time.now.in_time_zone}
 
 url_base = "https://api-guarderia.herokuapp.com/api/"
-url_base = url_base + "activity_logs/102"
+url_base = url_base + "activity_logs/103"
 response = HTTParty.put("#{url_base}", :query => parametros, :headers =>header)
 
 
