@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  baby_id: 1
+  assistant_id: 1
+  activity_id: 1
+  start_time: 2020-03-07
+  stop_time: 2020-03-07
+  duration: 1
+  comments: MyText
+
+two:
+  baby_id: 1
+  assistant_id: 1
+  activity_id: 1
+  start_time: 2020-03-07
+  stop_time: 2020-03-07
+  duration: 1
+  comments: MyText
