@@ -21,7 +21,6 @@ class ApiController < ApplicationController
 
 	def activities
 		@actividades = Activity.all
-		render status: 400, json: @actividades
 		pagina = 1
 		if params[:page].present?
 			pagina = params[:page]
