@@ -21,7 +21,7 @@ class ActivityLog < ApplicationRecord
 					if teach.present?
 						valid_date = true
 						begin
-							DateTime.parse("03-02-2010 22:54:52")
+							DateTime.parse(params[:start_time])
 						rescue ArgumentError
 							puts "Fecha invalida"
 							valid_date = false
