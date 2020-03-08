@@ -78,8 +78,9 @@ res.size
 
 
 parametros = {"baby_id"=>4, "activity_id"=>2, "assistant_id"=>2, "start_time" => Time.now.in_time_zone}
+parametros = {}
 url_base = "https://api-guarderia.herokuapp.com/api/"
-url_base = url_base + "activity_logs"
+url_base = url_base + "all_activity_logs"
 response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
 
 
