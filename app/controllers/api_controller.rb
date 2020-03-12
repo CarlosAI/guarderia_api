@@ -68,7 +68,11 @@ class ApiController < ApplicationController
 		@actividades = @actividades.where("baby_id"=>params[:baby_id])if params[:baby_id].present?
 		@actividades = @actividades.where("assistant_id"=>params[:assistant_id])if params[:assistant_id].present?
 		if params["status"].present?
-			@actividades = @actividades.where("LOWER(status) = LOWER(?)", params["status"])
+			if params["status"] == "Terminada"
+				@actividades = @actividades.where("duration is not null")
+			elsif params["status"] == "En progreso"
+				@actividades = @actividades.where("duration is null")	
+			end
 		end
 		pagina = 1
 		if params[:page].present?
