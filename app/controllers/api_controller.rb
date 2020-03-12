@@ -1,5 +1,4 @@
 class ApiController < ApplicationController
-	#curl http://localhost:3000/api/activities -X GET -H "Content-type: application/json"
 
 	before_action :validado, :only => [:activity_logs, :update_activity, :all_activity_logs]
 
@@ -29,8 +28,13 @@ class ApiController < ApplicationController
 		render json: @actividades
 	end
 
+	def assistants
+		@assistants = Assistant.select("id, name").order(name: :asc)
+		render json: @assistants
+	end
+
 	def babies
-		@bebes = Baby.select("age (current_date, birthday), id, name, mother_name, father_name, address, phone").order(id: :desc)
+		@bebes = Baby.select("age (current_date, birthday), id, name, mother_name, father_name, address, phone").order(name: :asc)
 		render json: @bebes
 	end
 

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     collection {get :babies}
     collection {post :activity_logs}
     collection {get :all_activity_logs}
+    collection {get :assistants}
   end
 
   get 'api/babies/:id/activity_logs' => 'api#activity_log'
