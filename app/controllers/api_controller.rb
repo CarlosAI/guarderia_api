@@ -1,7 +1,7 @@
 class ApiController < ApplicationController
 	#curl http://localhost:3000/api/activities -X GET -H "Content-type: application/json"
 
-	before_action :validado, :only => [:activity_logs, :update_activity]
+	before_action :validado, :only => [:activity_logs, :update_activity, :all_activity_logs]
 
 	def validado
 		puts params
@@ -60,7 +60,7 @@ class ApiController < ApplicationController
 	end
 
 	def all_activity_logs
-		@actividades = ActivityLog.all.select("baby_id, assistant_id, duration, start_time, (select name from babies where id=activity_logs.baby_id) as baby_name, (select name from assistants where id=activity_logs.assistant_id) as assistant_name, (select name from activities where id=activity_logs.activity_id) as activity_name, (CASE WHEN stop_time is null then 'En progreso' else 'Terminada' end) as status")
+		@actividades = ActivityLog.all.select("baby_id, assistant_id, duration, start_time, (select name from babies where id=activity_logs.baby_id) as baby_name, (select name from assistants where id=activity_logs.assistant_id) as assistant_name, (select name from activities where id=activity_logs.activity_id) as activity_name, (CASE WHEN stop_time is null then 'En progreso' else 'Terminada' end) as status").order(id: :desc)
 		@actividades = @actividades.where("baby_id"=>params[:baby_id])if params[:baby_id].present?
 		@actividades = @actividades.where("assistant_id"=>params[:assistant_id])if params[:assistant_id].present?
 		if params["status"].present?
