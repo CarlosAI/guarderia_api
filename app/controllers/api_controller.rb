@@ -30,7 +30,7 @@ class ApiController < ApplicationController
 	end
 
 	def babies
-		@bebes = Baby.all
+		@bebes = Baby.select("age (current_date, birthday), id, name, mother_name, father_name, address, phone").order(id: :desc)
 		render json: @bebes
 	end
 
@@ -40,7 +40,7 @@ class ApiController < ApplicationController
 	end
 
 	def activity_log
-		@actividad_bebe = ActivityLog.where("baby_id"=> params[:id])
+		@actividad_bebe = ActivityLog.where("baby_id"=> params[:id]).select("id, baby_id, (select name from assistants where id=activity_logs.assistant_id) as assistant_name, start_time, stop_time, (CASE WHEN stop_time is null then 'En progreso' else 'Terminada' end) as status")
 		pagina = 1
 		if params[:page].present?
 			pagina = params[:page]
@@ -60,11 +60,11 @@ class ApiController < ApplicationController
 	end
 
 	def all_activity_logs
-		@actividades = ActivityLog.all.select("baby_id, assistant_id, duration, start_time, (select name from babies where id=activity_logs.baby_id) as baby_name, (select name from assistants where id=activity_logs.assistant_id) as assistant_name, (select name from activities where id=activity_logs.activity_id) as activity_name")
+		@actividades = ActivityLog.all.select("baby_id, assistant_id, duration, start_time, (select name from babies where id=activity_logs.baby_id) as baby_name, (select name from assistants where id=activity_logs.assistant_id) as assistant_name, (select name from activities where id=activity_logs.activity_id) as activity_name, (CASE WHEN stop_time is null then 'En progreso' else 'Terminada' end) as status")
 		@actividades = @actividades.where("baby_id"=>params[:baby_id])if params[:baby_id].present?
 		@actividades = @actividades.where("assistant_id"=>params[:assistant_id])if params[:assistant_id].present?
-		if params["status"].present? && params["status"] == "finished"
-			@actividades = @actividades.where("duration is null")
+		if params["status"].present?
+			@actividades = @actividades.where("LOWER(status) = LOWER(?)", params["status"])
 		end
 		pagina = 1
 		if params[:page].present?

@@ -68,17 +68,22 @@ class ActivityLog < ApplicationRecord
 					valid_date = false
 				end
 				if valid_date
-					activity_log.stop_time = DateTime.parse(params[:stop_time]).in_time_zone
-					if activity_log.save
-						[200, "SUCCESS"]
+					fecha_stop = DateTime.parse(params[:stop_time]).in_time_zone
+					if fecha_stop > activity_log.start_time.in_time_zone
+						activity_log.stop_time = fecha_stop
+						if activity_log.save
+							return [200, "SUCCESS"]
+						else
+							return [404, "Something Wrong Happend, #{d.errors.messages}"]
+						end
 					else
-						[404, "Something Wrong Happend, #{d.errors.messages}"]
+						return [404, "Something Wrong Happend, #{d.errors.messages}"]
 					end
 				else
-					[400, "Invalid Date Format"]
+					return [400, "La fecha de fin es menor a la hora de inicio."]
 				end
 			else
-				[400, "ActivityLog not found"]
+				return [400, "ActivityLog not found"]
 			end
 		else
 			return [400, "Parametros incompletos, Obligatorios (stop_time, id)"]
