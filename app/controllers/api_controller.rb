@@ -78,7 +78,7 @@ class ApiController < ApplicationController
 		if params[:page].present?
 			pagina = params[:page]
 		end
-		@actividades = @actividades.paginate(:page => pagina, :per_page =>10)
+		@actividades = @actividades.paginate(:page => pagina, :per_page =>30)
 		render json: @actividades
 	end
 end
