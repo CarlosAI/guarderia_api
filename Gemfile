@@ -9,7 +9,7 @@ gem 'rails', '~> 5.2.3'
 gem 'pg'
 gem 'httparty'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 gem 'will_paginate', '~> 3.1.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 
